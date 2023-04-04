@@ -34,31 +34,44 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // Set up the circle layer
-        let circleCenter = CGPoint(x: view.center.x, y: view.center.y - 50)
-        let circleRadius = view.bounds.width / 2 - 100
+        let circleCenter = CGPoint(x: view.center.x, y: view.center.y)
+        let circleRadius = view.bounds.width / 2 * 0.90
         let circlePath = UIBezierPath(arcCenter: circleCenter,
                                       radius: circleRadius,
                                       startAngle: 0,
                                       endAngle: 2 * .pi,
                                       clockwise: true)
+        
         circleLayer.path = circlePath.cgPath
         circleLayer.fillColor = UIColor.clear.cgColor
         circleLayer.strokeColor = UIColor.black.cgColor
         circleLayer.lineWidth = 10
         view.layer.addSublayer(circleLayer)
-        
+
+        /*
         // Set up the hand layer
         handLayer.fillColor = UIColor.red.cgColor
         handLayer.strokeColor = UIColor.red.cgColor
         handLayer.lineWidth = 5
         view.layer.addSublayer(handLayer)
+         */
         
+        // Set up the hand layer
+        let handPath = UIBezierPath()
+        handPath.move(to: view.center)
+        handPath.addLine(to: CGPoint(x: view.center.x, y: view.center.y - circleRadius))
+        handLayer.path = handPath.cgPath
+        handLayer.strokeColor = UIColor.red.cgColor
+        handLayer.lineWidth = 3
+        handLayer.lineCap = .round
+        view.layer.addSublayer(handLayer)
+
         // Add the start/stop button and seconds label
         view.addSubview(startStopButton)
         view.addSubview(secondsLabel)
-        
+
         NSLayoutConstraint.activate([
             startStopButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             startStopButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
@@ -68,6 +81,56 @@ class ViewController: UIViewController {
                                               constant: 100),
         ])
     }
+    
+    /*
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Set up the circle layer
+        circleLayer.fillColor = UIColor.clear.cgColor
+        circleLayer.strokeColor = UIColor.black.cgColor
+        circleLayer.lineWidth = 4
+        let radius = view.bounds.width / 2 - 20
+        circleLayer.path = UIBezierPath(arcCenter: view.center, radius: radius, startAngle: 0, endAngle: CGFloat(Double.pi * 2), clockwise: true).cgPath
+        view.layer.addSublayer(circleLayer)
+        
+        // Set up the hand layer
+        let handPath = UIBezierPath()
+        handPath.move(to: view.center)
+        handPath.addLine(to: CGPoint(x: view.center.x, y: view.center.y - radius))
+        handLayer.path = handPath.cgPath
+        handLayer.strokeColor = UIColor.red.cgColor
+        handLayer.lineWidth = 3
+        handLayer.lineCap = .round
+        view.layer.addSublayer(handLayer)
+        
+        // Set up the seconds label
+        secondsLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 80, weight: .medium)
+        secondsLabel.textAlignment = .center
+        secondsLabel.text = "0.0"
+        view.addSubview(secondsLabel)
+        
+        // Set up the start/stop button
+        startStopButton.setTitle("Start", for: .normal)
+        startStopButton.backgroundColor = .blue
+        startStopButton.setTitleColor(.white, for: .normal)
+        startStopButton.layer.cornerRadius = 10
+        startStopButton.addTarget(self, action: #selector(startStopButtonTapped), for: .touchUpInside)
+        view.addSubview(startStopButton)
+        
+        // Position the seconds label and start/stop button
+        secondsLabel.frame = CGRect(x: 0,
+                                    y: view.center.y + radius + 20,
+                                    width: view.bounds.width,
+                                    height: 100)
+        startStopButton.frame = CGRect(x: 20,
+                                       y: view.bounds.height - 80,
+                                       width: view.bounds.width - 40,
+                                       height: 60)
+    }
+     */
+
+    
     
     @objc func updateTimer() {
         counter += 0.1
@@ -87,8 +150,8 @@ class ViewController: UIViewController {
         circleLayer.addSublayer(progressLayer)
         
         // Update the hand position
-        let circleCenter = CGPoint(x: view.center.x, y: view.center.y - 50)
-        let circleRadius = view.bounds.width / 2 - 100
+        let circleCenter = CGPoint(x: view.center.x, y: view.center.y)
+        let circleRadius = view.bounds.width / 2 * 0.90
         let handPath = UIBezierPath()
         handPath.move(to: circleCenter)
         handPath.addLine(to: CGPoint(x: circleCenter.x + circleRadius * CGFloat(cos(angle)),
