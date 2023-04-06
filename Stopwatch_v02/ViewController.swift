@@ -87,18 +87,18 @@ class ViewController: UIViewController {
         counter += 0.1
         secondsLabel.text = String(format: "%.1f", counter)
         let angle = 2 * .pi * counter / 60 - .pi / 2
-        let progressPath = UIBezierPath(arcCenter: circleLayer.position,
-                                        radius: circleLayer.bounds.width / 2,
-                                        startAngle: -.pi / 2,
-                                        endAngle: angle,
-                                        clockwise: true)
-        let progressLayer = CAShapeLayer()
-        progressLayer.path = progressPath.cgPath
-        progressLayer.fillColor = UIColor.clear.cgColor
-        progressLayer.strokeColor = UIColor.blue.cgColor
-        progressLayer.lineWidth = 5
-        progressLayer.lineCap = .round
-        circleLayer.addSublayer(progressLayer)
+//        let progressPath = UIBezierPath(arcCenter: circleLayer.position,
+//                                        radius: circleLayer.bounds.width / 2,
+//                                        startAngle: -.pi / 2,
+//                                        endAngle: angle,
+//                                        clockwise: true)
+//        let progressLayer = CAShapeLayer()
+//        progressLayer.path = progressPath.cgPath
+//        progressLayer.fillColor = UIColor.clear.cgColor
+//        progressLayer.strokeColor = UIColor.blue.cgColor
+//        progressLayer.lineWidth = 5
+//        progressLayer.lineCap = .round
+//        circleLayer.addSublayer(progressLayer)
         
         // Update the hand position
         let circleCenter = CGPoint(x: view.center.x, y: view.center.y)
@@ -117,10 +117,10 @@ class ViewController: UIViewController {
         } else {
             counter = 0.0
             secondsLabel.text = "0.0"
-            handLayer.path = nil
-            for sublayer in circleLayer.sublayers ?? [] {
-                sublayer.removeFromSuperlayer()
-            }
+//            handLayer.path = nil
+//            for sublayer in circleLayer.sublayers ?? [] {
+//                sublayer.removeFromSuperlayer()
+//            }
             timer = Timer.scheduledTimer(timeInterval: 0.1,
                                          target: self,
                                          selector: #selector(updateTimer),
